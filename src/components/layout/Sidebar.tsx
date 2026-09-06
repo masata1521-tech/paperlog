@@ -43,7 +43,7 @@ export function Sidebar({
 
   return (
     <nav
-      className={`flex h-full flex-col gap-1 border-r border-neutral-200 bg-white px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] transition-[width] duration-150 ${
+      className={`flex h-full flex-col gap-1 border-r border-neutral-200 bg-white px-3 pb-3 pt-[calc(env(safe-area-inset-top)+2.5rem)] transition-[width] duration-150 md:pt-3 ${
         collapsed ? "w-16" : "w-60"
       }`}
     >

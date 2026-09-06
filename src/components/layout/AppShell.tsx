@@ -68,7 +68,7 @@ export function AppShell({
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-2 border-b border-neutral-200 bg-white px-3 pb-3 pt-[calc(env(safe-area-inset-top)+0.75rem)] md:hidden">
+        <header className="flex items-center gap-2 border-b border-neutral-200 bg-white px-3 pb-3 pt-[calc(env(safe-area-inset-top)+2.5rem)] md:hidden">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
