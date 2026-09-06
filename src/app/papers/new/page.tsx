@@ -6,8 +6,13 @@ import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
-export default async function NewPaperPage() {
+export default async function NewPaperPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ created?: string }>;
+}) {
   const userId = await requireCurrentUserId();
+  const { created } = await searchParams;
   const [tags, projects] = await Promise.all([
     prisma.tag.findMany({ where: { userId }, orderBy: { name: "asc" } }),
     prisma.researchProject.findMany({ where: { userId }, orderBy: { title: "asc" } }),
@@ -26,6 +31,11 @@ export default async function NewPaperPage() {
       <p className="mt-1 text-sm text-neutral-500">
         タイトルと著者以外は空欄でも登録できます。あとから追記・修正してください。
       </p>
+      {created && (
+        <div className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm text-emerald-700">
+          論文を登録しました。続けて次の論文を登録できます。
+        </div>
+      )}
 
       <div className="mt-6">
         <PaperForm existingTags={tags.map((t) => t.name)} projects={projects} />

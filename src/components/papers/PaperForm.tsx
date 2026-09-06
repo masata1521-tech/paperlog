@@ -378,6 +378,17 @@ export function PaperForm({
       )}
 
       <div className="flex justify-end gap-2">
+        {!paper && (
+          <button
+            type="submit"
+            name="continueAdding"
+            value="1"
+            disabled={isPending}
+            className="rounded-md border border-neutral-300 px-5 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+          >
+            {isPending ? "保存中..." : "登録して続けて追加"}
+          </button>
+        )}
         <button
           type="submit"
           disabled={isPending}

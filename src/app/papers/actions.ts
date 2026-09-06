@@ -123,6 +123,9 @@ export async function createPaper(
   }
 
   revalidatePath("/papers");
+  if (formData.get("continueAdding")) {
+    redirect("/papers/new?created=1");
+  }
   redirect(`/papers/${paperId}`);
 }
 
