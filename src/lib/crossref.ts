@@ -61,7 +61,7 @@ export async function fetchDoiMetadata(doi: string): Promise<DoiMetadata | null>
   return {
     title: message.title?.[0] ?? null,
     authors: formatAuthors(message.author),
-    journal: message["container-title"]?.[0] ?? null,
+    journal: message["container-title"]?.at(-1) ?? null,
     volume: message.volume ?? null,
     issue: message.issue ?? null,
     year: extractYear(message),
