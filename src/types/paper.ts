@@ -4,6 +4,7 @@ export type Paper = {
   authors: string;
   journal: string | null;
   year: number | null;
+  pages: string | null;
   doi: string | null;
   studyDesign: string | null;
   subjects: string | null;

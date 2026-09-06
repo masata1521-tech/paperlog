@@ -43,6 +43,7 @@ model Paper {
   authors     String
   journal     String?
   year        Int?
+  pages       String?
   doi         String?
   studyDesign String?
   subjects    String?

@@ -50,6 +50,7 @@ export function PaperCard({
             {paper.authors}
             {paper.journal && <span> ・ {paper.journal}</span>}
             {paper.year && <span> ・ {paper.year}</span>}
+            {paper.pages && <span> ・ pp.{paper.pages}</span>}
             {paper.doi && <span className="text-neutral-400"> ・ DOI: {paper.doi}</span>}
           </p>
         </div>

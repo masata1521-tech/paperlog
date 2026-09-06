@@ -5,6 +5,7 @@ import { redirect, notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { splitList } from "@/lib/paper-utils";
 import { requireCurrentUserId } from "@/lib/current-user";
+import { fetchDoiMetadata, type DoiMetadata } from "@/lib/crossref";
 
 export async function toggleFavorite(id: string) {
   const userId = await requireCurrentUserId();
@@ -49,6 +50,7 @@ function extractPaperFields(formData: FormData) {
     authors: optionalStr(formData.get("authors")),
     journal: optionalStr(formData.get("journal")),
     year,
+    pages: optionalStr(formData.get("pages")),
     doi: optionalStr(formData.get("doi")),
     studyDesign: optionalStr(formData.get("studyDesign")),
     subjects: optionalStr(formData.get("subjects")),
@@ -173,6 +175,27 @@ export async function updatePaper(
   revalidatePath("/papers");
   revalidatePath(`/papers/${id}`);
   redirect(`/papers/${id}`);
+}
+
+export type DoiLookupState = { error: string } | { data: DoiMetadata } | null;
+
+export async function lookupDoi(
+  _prevState: DoiLookupState,
+  doi: string
+): Promise<DoiLookupState> {
+  const trimmed = doi.trim();
+  if (!trimmed) {
+    return { error: "DOIを入力してください" };
+  }
+  try {
+    const data = await fetchDoiMetadata(trimmed);
+    if (!data || (!data.title && !data.authors)) {
+      return { error: "この DOI の情報が見つかりませんでした" };
+    }
+    return { data };
+  } catch {
+    return { error: "取得に失敗しました。しばらくしてからもう一度お試しください" };
+  }
 }
 
 export async function deletePaper(id: string) {

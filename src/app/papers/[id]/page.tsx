@@ -52,6 +52,7 @@ export default async function PaperDetailPage({
           {paper.authors}
           {paper.journal && <span> ・ {paper.journal}</span>}
           {paper.year && <span> ・ {paper.year}</span>}
+          {paper.pages && <span> ・ pp.{paper.pages}</span>}
         </p>
         {paper.doi && (
           <p className="mt-1 text-sm text-neutral-400">

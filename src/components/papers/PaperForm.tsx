@@ -1,8 +1,8 @@
 "use client";
 
-import { useActionState } from "react";
+import { useActionState, useRef, useState } from "react";
 import type { Paper } from "@/types/paper";
-import { createPaper, updatePaper, type PaperFormState } from "@/app/papers/actions";
+import { createPaper, updatePaper, lookupDoi, type PaperFormState } from "@/app/papers/actions";
 
 const STUDY_DESIGNS = [
   "Randomized controlled trial",
@@ -28,6 +28,39 @@ export function PaperForm({
     null
   );
 
+  const titleRef = useRef<HTMLInputElement>(null);
+  const authorsRef = useRef<HTMLInputElement>(null);
+  const journalRef = useRef<HTMLInputElement>(null);
+  const yearRef = useRef<HTMLInputElement>(null);
+  const pagesRef = useRef<HTMLInputElement>(null);
+  const doiRef = useRef<HTMLInputElement>(null);
+  const [isLookingUp, setIsLookingUp] = useState(false);
+  const [lookupMessage, setLookupMessage] = useState<{ type: "error" | "success"; text: string } | null>(
+    null
+  );
+
+  const handleDoiLookup = async () => {
+    const doi = doiRef.current?.value ?? "";
+    setIsLookingUp(true);
+    setLookupMessage(null);
+    try {
+      const result = await lookupDoi(null, doi);
+      if (result && "error" in result) {
+        setLookupMessage({ type: "error", text: result.error });
+      } else if (result && "data" in result) {
+        const { data } = result;
+        if (data.title && titleRef.current) titleRef.current.value = data.title;
+        if (data.authors && authorsRef.current) authorsRef.current.value = data.authors;
+        if (data.journal && journalRef.current) journalRef.current.value = data.journal;
+        if (data.year && yearRef.current) yearRef.current.value = String(data.year);
+        if (data.pages && pagesRef.current) pagesRef.current.value = data.pages;
+        setLookupMessage({ type: "success", text: "取得した情報でフォームを更新しました" });
+      }
+    } finally {
+      setIsLookingUp(false);
+    }
+  };
+
   return (
     <form action={formAction} className="space-y-6">
       {paper && <input type="hidden" name="id" value={paper.id} />}
@@ -39,8 +72,37 @@ export function PaperForm({
 
       <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
         <h2 className="text-sm font-semibold text-neutral-500">書誌情報</h2>
+        <Field label="DOI" hint="入力して「自動入力」を押すと、タイトル・著者などを取得します">
+          <div className="flex gap-2">
+            <input
+              ref={doiRef}
+              name="doi"
+              defaultValue={paper?.doi ?? ""}
+              className={inputClass}
+              placeholder="10.xxxx/xxxxx"
+            />
+            <button
+              type="button"
+              onClick={handleDoiLookup}
+              disabled={isLookingUp}
+              className="shrink-0 rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+            >
+              {isLookingUp ? "取得中..." : "自動入力"}
+            </button>
+          </div>
+          {lookupMessage && (
+            <span
+              className={`mt-1 block text-xs ${
+                lookupMessage.type === "error" ? "text-red-600" : "text-emerald-600"
+              }`}
+            >
+              {lookupMessage.text}
+            </span>
+          )}
+        </Field>
         <Field label="タイトル" required>
           <input
+            ref={titleRef}
             name="title"
             required
             defaultValue={paper?.title}
@@ -50,6 +112,7 @@ export function PaperForm({
         </Field>
         <Field label="著者" required>
           <input
+            ref={authorsRef}
             name="authors"
             required
             defaultValue={paper?.authors}
@@ -59,10 +122,16 @@ export function PaperForm({
         </Field>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Field label="ジャーナル">
-            <input name="journal" defaultValue={paper?.journal ?? ""} className={inputClass} />
+            <input
+              ref={journalRef}
+              name="journal"
+              defaultValue={paper?.journal ?? ""}
+              className={inputClass}
+            />
           </Field>
           <Field label="発表年">
             <input
+              ref={yearRef}
               name="year"
               type="number"
               defaultValue={paper?.year ?? ""}
@@ -70,12 +139,13 @@ export function PaperForm({
               placeholder="2024"
             />
           </Field>
-          <Field label="DOI">
+          <Field label="ページ">
             <input
-              name="doi"
-              defaultValue={paper?.doi ?? ""}
+              ref={pagesRef}
+              name="pages"
+              defaultValue={paper?.pages ?? ""}
               className={inputClass}
-              placeholder="10.xxxx/xxxxx"
+              placeholder="123-145"
             />
           </Field>
         </div>
