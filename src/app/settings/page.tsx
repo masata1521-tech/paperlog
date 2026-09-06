@@ -1,5 +1,6 @@
 import { prisma } from "@/lib/prisma";
 import { DefaultViewSetting } from "@/components/settings/DefaultViewSetting";
+import { ChangePasswordForm } from "@/components/settings/ChangePasswordForm";
 import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +26,13 @@ export default async function SettingsPage() {
         </p>
         <div className="mt-3">
           <DefaultViewSetting />
+        </div>
+      </section>
+
+      <section className="mt-4 rounded-xl border border-neutral-200 bg-white p-5">
+        <h2 className="text-sm font-semibold text-neutral-500">パスワード変更</h2>
+        <div className="mt-3">
+          <ChangePasswordForm />
         </div>
       </section>
 

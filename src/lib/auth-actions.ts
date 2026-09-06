@@ -4,6 +4,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { hashPassword, verifyPassword } from "@/lib/password";
+import { requireCurrentUserId } from "@/lib/current-user";
 import {
   createSessionToken,
   SESSION_COOKIE_NAME,
@@ -11,6 +12,7 @@ import {
 } from "@/lib/session";
 
 export type AuthFormState = { error: string } | null;
+export type ChangePasswordState = { error: string } | { success: true } | null;
 
 async function setSessionCookie(userId: string) {
   const token = await createSessionToken(userId);
@@ -76,4 +78,34 @@ export async function logout() {
   const cookieStore = await cookies();
   cookieStore.delete(SESSION_COOKIE_NAME);
   redirect("/login");
+}
+
+export async function changePassword(
+  _prevState: ChangePasswordState,
+  formData: FormData
+): Promise<ChangePasswordState> {
+  const userId = await requireCurrentUserId();
+  const currentPassword = String(formData.get("currentPassword") ?? "");
+  const newPassword = String(formData.get("newPassword") ?? "");
+  const confirmPassword = String(formData.get("confirmPassword") ?? "");
+
+  if (!currentPassword || !newPassword || !confirmPassword) {
+    return { error: "すべての項目を入力してください" };
+  }
+  if (newPassword.length < 8) {
+    return { error: "新しいパスワードは8文字以上にしてください" };
+  }
+  if (newPassword !== confirmPassword) {
+    return { error: "新しいパスワードが一致しません" };
+  }
+
+  const user = await prisma.user.findUniqueOrThrow({ where: { id: userId } });
+  if (!(await verifyPassword(currentPassword, user.passwordHash))) {
+    return { error: "現在のパスワードが違います" };
+  }
+
+  const passwordHash = await hashPassword(newPassword);
+  await prisma.user.update({ where: { id: userId }, data: { passwordHash } });
+
+  return { success: true };
 }
