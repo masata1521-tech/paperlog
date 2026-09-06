@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Search, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
-import { Prisma } from "@/generated/prisma/client";
+import { Prisma } from "@prisma/client";
 import { ResultsView } from "@/components/papers/ResultsView";
 import { requireCurrentUserId } from "@/lib/current-user";
 
