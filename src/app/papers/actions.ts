@@ -54,6 +54,7 @@ function extractPaperFields(formData: FormData) {
     year,
     pages: optionalStr(formData.get("pages")),
     doi: optionalStr(formData.get("doi")),
+    url: optionalStr(formData.get("url")),
     studyDesign: optionalStr(formData.get("studyDesign")),
     subjects: optionalStr(formData.get("subjects")),
     summary: optionalStr(formData.get("summary")),

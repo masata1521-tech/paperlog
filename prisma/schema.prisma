@@ -47,6 +47,7 @@ model Paper {
   year        Int?
   pages       String?
   doi         String?
+  url         String?
   studyDesign String?
   subjects    String?
   summary     String?

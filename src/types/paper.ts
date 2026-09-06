@@ -8,6 +8,7 @@ export type Paper = {
   year: number | null;
   pages: string | null;
   doi: string | null;
+  url: string | null;
   studyDesign: string | null;
   subjects: string | null;
   summary: string | null;

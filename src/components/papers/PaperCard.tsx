@@ -160,6 +160,17 @@ export function PaperCard({
             詳細を見る
             <ExternalLink size={14} />
           </Link>
+          {paper.url && (
+            <a
+              href={paper.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            >
+              本文を開く
+              <ExternalLink size={14} />
+            </a>
+          )}
           <button
             type="button"
             disabled={isPending}

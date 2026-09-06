@@ -70,6 +70,20 @@ export default async function PaperDetailPage({
             </a>
           </p>
         )}
+        {paper.url && (
+          <p className="mt-1 text-sm text-neutral-400">
+            本文:{" "}
+            <a
+              href={paper.url}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-1 text-indigo-500 hover:underline"
+            >
+              {paper.url}
+              <ExternalLink size={12} />
+            </a>
+          </p>
+        )}
 
         <div className="mt-4">
           <PaperDetailActions id={paper.id} isFavorite={paper.isFavorite} isRead={paper.isRead} />

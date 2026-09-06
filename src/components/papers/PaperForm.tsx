@@ -175,6 +175,15 @@ export function PaperForm({
             />
           </Field>
         </div>
+        <Field label="本文URL" hint="DOIが無い場合や、PDF・全文へのリンクを保存したいときに">
+          <input
+            name="url"
+            type="url"
+            defaultValue={paper?.url ?? ""}
+            className={inputClass}
+            placeholder="https://..."
+          />
+        </Field>
       </section>
 
       <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
