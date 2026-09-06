@@ -1,9 +1,10 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { Star, BookOpenCheck, Pencil, Trash2 } from "lucide-react";
 import { toggleFavorite, toggleRead, deletePaper } from "@/app/papers/actions";
+import { ConfirmDialog } from "@/components/ui/ConfirmDialog";
 
 export function PaperDetailActions({
   id,
@@ -15,12 +16,7 @@ export function PaperDetailActions({
   isRead: boolean;
 }) {
   const [isPending, startTransition] = useTransition();
-
-  const handleDelete = () => {
-    if (window.confirm("この論文を削除します。この操作は取り消せません。よろしいですか?")) {
-      startTransition(() => deletePaper(id));
-    }
-  };
+  const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   return (
     <div className="flex items-center gap-2">
@@ -60,12 +56,21 @@ export function PaperDetailActions({
       <button
         type="button"
         disabled={isPending}
-        onClick={handleDelete}
+        onClick={() => setConfirmingDelete(true)}
         className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
       >
         <Trash2 size={14} />
         削除
       </button>
+
+      <ConfirmDialog
+        open={confirmingDelete}
+        title="この論文を削除しますか?"
+        message="この操作は取り消せません。"
+        isPending={isPending}
+        onCancel={() => setConfirmingDelete(false)}
+        onConfirm={() => startTransition(() => deletePaper(id))}
+      />
     </div>
   );
 }
