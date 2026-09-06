@@ -55,7 +55,7 @@ export default async function DashboardPage() {
 
   return (
     <div className="mx-auto max-w-5xl p-4 sm:p-8">
-      <h1 className="text-2xl font-bold text-neutral-900">ダッシュボード</h1>
+      <h1 className="text-2xl font-bold text-neutral-900">ホーム</h1>
       <p className="mt-1 text-sm text-neutral-500">
         未読論文が{unreadCount}件、プロジェクト未登録が{unassignedCount}件あります
       </p>

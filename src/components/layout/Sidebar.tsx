@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  LayoutDashboard,
+  Home,
   BookOpen,
   FlaskConical,
   Tag,
@@ -18,7 +18,7 @@ import {
 import { logout } from "@/lib/auth-actions";
 
 const NAV_ITEMS = [
-  { href: "/dashboard", label: "ダッシュボード", icon: LayoutDashboard },
+  { href: "/dashboard", label: "ホーム", icon: Home },
   { href: "/papers", label: "論文", icon: BookOpen },
   { href: "/projects", label: "研究プロジェクト", icon: FlaskConical },
   { href: "/tags", label: "タグ", icon: Tag },
