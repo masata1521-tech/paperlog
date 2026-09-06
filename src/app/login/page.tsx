@@ -15,7 +15,12 @@ export default async function LoginPage({
         <div className="mt-4">
           <LoginForm from={from} />
         </div>
-        <p className="mt-4 text-center text-sm text-neutral-500">
+        <p className="mt-3 text-center text-sm">
+          <Link href="/forgot-password" className="text-indigo-600 hover:underline">
+            パスワードをお忘れですか?
+          </Link>
+        </p>
+        <p className="mt-2 text-center text-sm text-neutral-500">
           アカウントをお持ちでない方は{" "}
           <Link href="/signup" className="text-indigo-600 hover:underline">
             新規登録

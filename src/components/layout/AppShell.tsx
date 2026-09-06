@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 import { Sidebar } from "./Sidebar";
 
-const NO_SIDEBAR_PATHS = ["/login", "/signup"];
+const NO_SIDEBAR_PATHS = ["/login", "/signup", "/forgot-password", "/reset-password"];
 
 export function AppShell({
   userLabel,
