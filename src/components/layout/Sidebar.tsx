@@ -49,7 +49,13 @@ export function Sidebar({
     >
       <div className="mb-4 flex items-center justify-between px-1">
         {!collapsed && (
-          <span className="text-lg font-semibold text-neutral-900">PaperLog</span>
+          <Link
+            href="/dashboard"
+            onClick={onNavigate}
+            className="text-lg font-semibold text-neutral-900 hover:text-neutral-700"
+          >
+            PaperLog
+          </Link>
         )}
         {onToggleCollapse && (
           <button

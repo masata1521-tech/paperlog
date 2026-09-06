@@ -23,7 +23,7 @@ export function PaperCard({
 
   return (
     <div
-      className={`relative rounded-xl border bg-white p-5 shadow-sm transition-shadow hover:shadow-md ${
+      className={`relative rounded-xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5 ${
         selected ? "border-indigo-400 ring-1 ring-indigo-300" : "border-neutral-200"
       }`}
     >
@@ -55,7 +55,7 @@ export function PaperCard({
         </div>
       </div>
 
-      <div className="mt-4 space-y-3 pl-7">
+      <div className="mt-4 space-y-3 pl-0 sm:pl-7">
         <section>
           <div className="mb-1 flex items-center gap-1.5">
             <span className="text-xs font-semibold text-neutral-500">【研究概要】</span>
@@ -69,7 +69,7 @@ export function PaperCard({
           <p className="line-clamp-3 text-sm text-neutral-700">{paper.summary ?? "—"}</p>
         </section>
 
-        <div className="grid grid-cols-2 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <section>
             <span className="text-xs font-semibold text-neutral-500">【対象】</span>
             <p className="mt-0.5 whitespace-pre-line text-sm text-neutral-700">
@@ -114,7 +114,7 @@ export function PaperCard({
         </section>
 
         <section className="border-t border-neutral-100 pt-3">
-          <div className="flex items-center justify-between gap-2">
+          <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <span className="text-xs font-semibold text-neutral-500">【研究との関連】</span>
               <div className="mt-0.5">
@@ -122,7 +122,7 @@ export function PaperCard({
               </div>
             </div>
             {paper.usageLabels.length > 0 && (
-              <div className="flex flex-wrap justify-end gap-1">
+              <div className="flex flex-wrap gap-1 sm:justify-end">
                 {paper.usageLabels.map((label) => (
                   <span
                     key={label}

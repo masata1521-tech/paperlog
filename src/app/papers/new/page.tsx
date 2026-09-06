@@ -14,7 +14,7 @@ export default async function NewPaperPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-3xl p-8">
+    <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/papers"
         className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"

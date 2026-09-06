@@ -45,27 +45,27 @@ export function ResultsView({ papers }: { papers: Paper[] }) {
 
   return (
     <div>
-      <div className="mb-4 flex items-center justify-between">
+      <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-neutral-500">
           {papers.length}件の論文
           {selectedIds.size > 0 && (
             <span className="ml-2 text-indigo-600">・{selectedIds.size}件選択中</span>
           )}
         </p>
-        <div className="flex items-center rounded-lg border border-neutral-200 bg-white p-1">
+        <div className="grid grid-cols-3 rounded-lg border border-neutral-200 bg-white p-1 sm:flex sm:items-center">
           {VIEW_OPTIONS.map(({ mode, label, icon: Icon }) => (
             <button
               key={mode}
               type="button"
               onClick={() => setView(mode)}
-              className={`inline-flex items-center gap-1.5 rounded-md px-3 py-1.5 text-sm font-medium transition-colors ${
+              className={`inline-flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium transition-colors sm:px-3 ${
                 view === mode
                   ? "bg-neutral-900 text-white"
                   : "text-neutral-600 hover:bg-neutral-100"
               }`}
             >
               <Icon size={15} />
-              {label}
+              <span className="hidden sm:inline">{label}</span>
             </button>
           ))}
         </div>

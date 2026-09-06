@@ -14,7 +14,7 @@ export default async function RecentPage() {
   });
 
   return (
-    <div className="mx-auto max-w-6xl p-8">
+    <div className="mx-auto max-w-6xl p-4 sm:p-8">
       <h1 className="text-2xl font-bold text-neutral-900">最近見た論文</h1>
       <p className="mt-1 text-sm text-neutral-500">
         直近で詳細を開いた論文を新しい順に表示しています。

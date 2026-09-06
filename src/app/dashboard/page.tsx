@@ -54,13 +54,13 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="mx-auto max-w-5xl p-8">
+    <div className="mx-auto max-w-5xl p-4 sm:p-8">
       <h1 className="text-2xl font-bold text-neutral-900">ダッシュボード</h1>
       <p className="mt-1 text-sm text-neutral-500">
         未読論文が{unreadCount}件、プロジェクト未登録が{unassignedCount}件あります
       </p>
 
-      <div className="mt-6 grid grid-cols-4 gap-4">
+      <div className="mt-6 grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-4">
         {stats.map(({ label, value, icon: Icon, color }) => (
           <div key={label} className="rounded-xl border border-neutral-200 bg-white p-4">
             <div className={`inline-flex rounded-lg p-2 ${color}`}>
@@ -82,7 +82,7 @@ export default async function DashboardPage() {
         {projects.length === 0 ? (
           <p className="mt-3 text-sm text-neutral-400">まだ研究プロジェクトがありません。</p>
         ) : (
-          <div className="mt-3 grid grid-cols-3 gap-4">
+          <div className="mt-3 grid grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3">
             {projects.map((project) => {
               const rated = project.papers
                 .map((p) => p.relevanceRating)
@@ -111,7 +111,7 @@ export default async function DashboardPage() {
         )}
       </section>
 
-      <div className="mt-8 grid grid-cols-2 gap-6">
+      <div className="mt-8 grid grid-cols-1 gap-6 sm:grid-cols-2">
         <section>
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-semibold text-neutral-700">最近見た論文</h2>

@@ -14,7 +14,7 @@ export default async function TagsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-4xl p-8">
+    <div className="mx-auto max-w-4xl p-4 sm:p-8">
       <h1 className="text-2xl font-bold text-neutral-900">タグ</h1>
       <p className="mt-1 text-sm text-neutral-500">
         タグをクリックすると、そのタグが付いた論文を検索結果で絞り込めます。

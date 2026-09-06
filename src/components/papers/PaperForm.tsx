@@ -57,7 +57,7 @@ export function PaperForm({
             placeholder="Smith J, Tanaka K, et al."
           />
         </Field>
-        <div className="grid grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
           <Field label="ジャーナル">
             <input name="journal" defaultValue={paper?.journal ?? ""} className={inputClass} />
           </Field>
@@ -91,7 +91,7 @@ export function PaperForm({
             className={inputClass}
           />
         </Field>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="対象" hint="例: 健常成人 42名 / 平均年齢 24.3±3.2歳">
             <textarea
               name="subjects"
@@ -129,7 +129,7 @@ export function PaperForm({
 
       <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
         <h2 className="text-sm font-semibold text-neutral-500">自分の研究との関連</h2>
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="関連度">
             <select
               name="relevanceRating"

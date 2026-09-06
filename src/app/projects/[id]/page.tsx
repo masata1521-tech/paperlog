@@ -28,7 +28,7 @@ export default async function ProjectDetailPage({
   });
 
   return (
-    <div className="mx-auto max-w-3xl p-8">
+    <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/projects"
         className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
@@ -37,8 +37,8 @@ export default async function ProjectDetailPage({
         プロジェクト一覧に戻る
       </Link>
 
-      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-6">
-        <div className="flex items-start justify-between gap-4">
+      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-4 sm:p-6">
+        <div className="flex flex-wrap items-start justify-between gap-4">
           <h1 className="text-xl font-bold text-neutral-900">{project.title}</h1>
           <ProjectDangerActions id={project.id} />
         </div>

@@ -19,7 +19,7 @@ export function PaperDetailActions({
   const [confirmingDelete, setConfirmingDelete] = useState(false);
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-wrap items-center gap-2">
       <button
         type="button"
         disabled={isPending}
@@ -57,7 +57,7 @@ export function PaperDetailActions({
         type="button"
         disabled={isPending}
         onClick={() => setConfirmingDelete(true)}
-        className="ml-auto inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50 sm:ml-auto"
       >
         <Trash2 size={14} />
         削除

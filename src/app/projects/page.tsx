@@ -14,8 +14,8 @@ export default async function ProjectsPage() {
   });
 
   return (
-    <div className="mx-auto max-w-4xl p-8">
-      <div className="flex items-start justify-between gap-4">
+    <div className="mx-auto max-w-4xl p-4 sm:p-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-neutral-900">研究プロジェクト</h1>
           <p className="mt-1 text-sm text-neutral-500">
@@ -36,7 +36,7 @@ export default async function ProjectsPage() {
           まだ研究プロジェクトがありません。「プロジェクトを作成」から始めてください。
         </div>
       ) : (
-        <div className="mt-6 grid grid-cols-2 gap-4">
+        <div className="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {projects.map((project) => (
             <Link
               key={project.id}

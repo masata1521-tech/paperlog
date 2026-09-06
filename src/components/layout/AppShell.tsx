@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { Sidebar } from "./Sidebar";
@@ -76,7 +77,9 @@ export function AppShell({
           >
             <Menu size={20} />
           </button>
-          <span className="text-base font-semibold text-neutral-900">PaperLog</span>
+          <Link href="/dashboard" className="text-base font-semibold text-neutral-900">
+            PaperLog
+          </Link>
         </header>
         <main className="flex-1 overflow-y-auto">{children}</main>
       </div>

@@ -15,7 +15,7 @@ export default async function SettingsPage() {
   ]);
 
   return (
-    <div className="mx-auto max-w-2xl p-8">
+    <div className="mx-auto max-w-2xl p-4 sm:p-8">
       <h1 className="text-2xl font-bold text-neutral-900">設定</h1>
       <p className="mt-1 text-sm text-neutral-500">{user?.email}でログイン中</p>
 

@@ -87,8 +87,8 @@ export default async function PapersPage({
   ]);
 
   return (
-    <div className="mx-auto max-w-6xl p-8">
-      <div className="flex items-start justify-between gap-4">
+    <div className="mx-auto max-w-6xl p-4 sm:p-8">
+      <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
           <h1 className="text-2xl font-bold text-neutral-900">論文検索</h1>
           <p className="mt-1 text-sm text-neutral-500">

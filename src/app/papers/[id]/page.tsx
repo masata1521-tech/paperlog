@@ -30,7 +30,7 @@ export default async function PaperDetailPage({
   const outcomes = splitList(paper.outcomes);
 
   return (
-    <div className="mx-auto max-w-3xl p-8">
+    <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/papers"
         className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
@@ -39,7 +39,7 @@ export default async function PaperDetailPage({
         検索結果に戻る
       </Link>
 
-      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-6">
+      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-4 sm:p-6">
         <div className="flex items-start justify-between gap-4">
           <h1 className="text-xl font-bold leading-snug text-neutral-900">{paper.title}</h1>
           {!paper.isRead && (
@@ -86,7 +86,7 @@ export default async function PaperDetailPage({
             <p className="text-sm text-neutral-700">{paper.summary ?? "未入力"}</p>
           </section>
 
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <section>
               <h2 className="text-sm font-semibold text-neutral-500">対象</h2>
               <p className="mt-1 whitespace-pre-line text-sm text-neutral-700">
@@ -131,7 +131,7 @@ export default async function PaperDetailPage({
           </section>
 
           <section className="border-t border-neutral-100 pt-4">
-            <div className="flex items-center justify-between gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
                 <h2 className="text-sm font-semibold text-neutral-500">研究との関連</h2>
                 <div className="mt-1">
@@ -139,7 +139,7 @@ export default async function PaperDetailPage({
                 </div>
               </div>
               {paper.usageLabels.length > 0 && (
-                <div className="flex flex-wrap justify-end gap-1">
+                <div className="flex flex-wrap gap-1 sm:justify-end">
                   {paper.usageLabels.map((label) => (
                     <span
                       key={label}
