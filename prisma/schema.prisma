@@ -14,13 +14,25 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id           String   @id @default(cuid())
+  email        String   @unique
+  name         String?
+  passwordHash String
+  createdAt    DateTime @default(now())
+
+  papers           Paper[]
+  tags             Tag[]
+  researchProjects ResearchProject[]
+}
+
 model Paper {
   id          String   @id @default(cuid())
   title       String
   authors     String
   journal     String?
   year        Int?
-  doi         String?  @unique
+  doi         String?
   studyDesign String?
   subjects    String?
   summary     String?
@@ -39,14 +51,25 @@ model Paper {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   tags             Tag[]             @relation("PaperTags")
   researchProjects ResearchProject[] @relation("PaperResearchProjects")
+
+  @@unique([userId, doi])
 }
 
 model Tag {
   id     String  @id @default(cuid())
-  name   String  @unique
+  name   String
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   papers Paper[] @relation("PaperTags")
+
+  @@unique([userId, name])
 }
 
 model ResearchProject {
@@ -55,6 +78,9 @@ model ResearchProject {
   description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   papers Paper[] @relation("PaperResearchProjects")
 }

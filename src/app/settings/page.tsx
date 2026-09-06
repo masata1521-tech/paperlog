@@ -1,18 +1,22 @@
 import { prisma } from "@/lib/prisma";
 import { DefaultViewSetting } from "@/components/settings/DefaultViewSetting";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function SettingsPage() {
-  const [paperCount, tagCount, projectCount] = await Promise.all([
-    prisma.paper.count(),
-    prisma.tag.count(),
-    prisma.researchProject.count(),
+  const userId = await requireCurrentUserId();
+  const [user, paperCount, tagCount, projectCount] = await Promise.all([
+    prisma.user.findUnique({ where: { id: userId }, select: { email: true, name: true } }),
+    prisma.paper.count({ where: { userId } }),
+    prisma.tag.count({ where: { userId } }),
+    prisma.researchProject.count({ where: { userId } }),
   ]);
 
   return (
     <div className="mx-auto max-w-2xl p-8">
       <h1 className="text-2xl font-bold text-neutral-900">設定</h1>
+      <p className="mt-1 text-sm text-neutral-500">{user?.email}でログイン中</p>
 
       <section className="mt-6 rounded-xl border border-neutral-200 bg-white p-5">
         <h2 className="text-sm font-semibold text-neutral-500">表示設定</h2>

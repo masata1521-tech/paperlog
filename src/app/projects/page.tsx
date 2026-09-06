@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Plus, FlaskConical } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProjectsPage() {
+  const userId = await requireCurrentUserId();
   const projects = await prisma.researchProject.findMany({
+    where: { userId },
     include: { _count: { select: { papers: true } } },
     orderBy: { updatedAt: "desc" },
   });

@@ -1,11 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { ResultsView } from "@/components/papers/ResultsView";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function FavoritesPage() {
+  const userId = await requireCurrentUserId();
   const papers = await prisma.paper.findMany({
-    where: { isFavorite: true },
+    where: { userId, isFavorite: true },
     include: { tags: true, researchProjects: true },
     orderBy: { updatedAt: "desc" },
   });

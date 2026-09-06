@@ -1,9 +1,11 @@
 import { prisma } from "@/lib/prisma";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
-  const paperCount = await prisma.paper.count();
+  const userId = await requireCurrentUserId();
+  const paperCount = await prisma.paper.count({ where: { userId } });
 
   return (
     <div className="p-8">

@@ -2,13 +2,15 @@ import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { PaperForm } from "@/components/papers/PaperForm";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function NewPaperPage() {
+  const userId = await requireCurrentUserId();
   const [tags, projects] = await Promise.all([
-    prisma.tag.findMany({ orderBy: { name: "asc" } }),
-    prisma.researchProject.findMany({ orderBy: { title: "asc" } }),
+    prisma.tag.findMany({ where: { userId }, orderBy: { name: "asc" } }),
+    prisma.researchProject.findMany({ where: { userId }, orderBy: { title: "asc" } }),
   ]);
 
   return (

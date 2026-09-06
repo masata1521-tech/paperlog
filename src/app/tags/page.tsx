@@ -1,11 +1,14 @@
 import Link from "next/link";
 import { Tag as TagIcon } from "lucide-react";
 import { prisma } from "@/lib/prisma";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function TagsPage() {
+  const userId = await requireCurrentUserId();
   const tags = await prisma.tag.findMany({
+    where: { userId },
     include: { _count: { select: { papers: true } } },
     orderBy: { name: "asc" },
   });

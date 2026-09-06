@@ -5,22 +5,24 @@ import { prisma } from "@/lib/prisma";
 import { addPaperToProject, removePaperFromProject } from "@/app/projects/actions";
 import { ProjectDangerActions } from "@/components/projects/ProjectDangerActions";
 import { StarRating } from "@/components/papers/StarRating";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export default async function ProjectDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const userId = await requireCurrentUserId();
   const { id } = await params;
-  const project = await prisma.researchProject.findUnique({
-    where: { id },
+  const project = await prisma.researchProject.findFirst({
+    where: { id, userId },
     include: { papers: { orderBy: { createdAt: "desc" } } },
   });
 
   if (!project) notFound();
 
   const availablePapers = await prisma.paper.findMany({
-    where: { researchProjects: { none: { id } } },
+    where: { userId, researchProjects: { none: { id } } },
     orderBy: { title: "asc" },
     select: { id: true, title: true },
   });

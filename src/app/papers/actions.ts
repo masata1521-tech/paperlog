@@ -1,12 +1,15 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
+import { redirect, notFound } from "next/navigation";
 import { prisma } from "@/lib/prisma";
 import { splitList } from "@/lib/paper-utils";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export async function toggleFavorite(id: string) {
-  const paper = await prisma.paper.findUniqueOrThrow({ where: { id } });
+  const userId = await requireCurrentUserId();
+  const paper = await prisma.paper.findFirst({ where: { id, userId } });
+  if (!paper) return;
   await prisma.paper.update({
     where: { id },
     data: { isFavorite: !paper.isFavorite },
@@ -16,7 +19,9 @@ export async function toggleFavorite(id: string) {
 }
 
 export async function toggleRead(id: string) {
-  const paper = await prisma.paper.findUniqueOrThrow({ where: { id } });
+  const userId = await requireCurrentUserId();
+  const paper = await prisma.paper.findFirst({ where: { id, userId } });
+  if (!paper) return;
   await prisma.paper.update({
     where: { id },
     data: { isRead: !paper.isRead },
@@ -74,10 +79,16 @@ export async function createPaper(
   _prevState: PaperFormState,
   formData: FormData
 ): Promise<PaperFormState> {
+  const userId = await requireCurrentUserId();
   const { title, authors, tagNames, projectIds, ...fields } = extractPaperFields(formData);
   if (!title || !authors) {
     return { error: "タイトルと著者は必須です" };
   }
+
+  const ownedProjects = await prisma.researchProject.findMany({
+    where: { id: { in: projectIds }, userId },
+    select: { id: true },
+  });
 
   let paperId: string;
   try {
@@ -86,14 +97,15 @@ export async function createPaper(
         title,
         authors,
         ...fields,
+        userId,
         tags: {
           connectOrCreate: tagNames.map((name) => ({
-            where: { name },
-            create: { name },
+            where: { userId_name: { userId, name } },
+            create: { name, userId },
           })),
         },
         researchProjects: {
-          connect: projectIds.map((id) => ({ id })),
+          connect: ownedProjects.map((p) => ({ id: p.id })),
         },
       },
     });
@@ -113,15 +125,24 @@ export async function updatePaper(
   _prevState: PaperFormState,
   formData: FormData
 ): Promise<PaperFormState> {
+  const userId = await requireCurrentUserId();
   const id = String(formData.get("id") ?? "");
   if (!id) {
     return { error: "不正なリクエストです" };
   }
 
+  const existing = await prisma.paper.findFirst({ where: { id, userId }, select: { id: true } });
+  if (!existing) notFound();
+
   const { title, authors, tagNames, projectIds, ...fields } = extractPaperFields(formData);
   if (!title || !authors) {
     return { error: "タイトルと著者は必須です" };
   }
+
+  const ownedProjects = await prisma.researchProject.findMany({
+    where: { id: { in: projectIds }, userId },
+    select: { id: true },
+  });
 
   try {
     await prisma.paper.update({
@@ -133,12 +154,12 @@ export async function updatePaper(
         tags: {
           set: [],
           connectOrCreate: tagNames.map((name) => ({
-            where: { name },
-            create: { name },
+            where: { userId_name: { userId, name } },
+            create: { name, userId },
           })),
         },
         researchProjects: {
-          set: projectIds.map((id) => ({ id })),
+          set: ownedProjects.map((p) => ({ id: p.id })),
         },
       },
     });
@@ -155,7 +176,8 @@ export async function updatePaper(
 }
 
 export async function deletePaper(id: string) {
-  await prisma.paper.delete({ where: { id } });
+  const userId = await requireCurrentUserId();
+  await prisma.paper.deleteMany({ where: { id, userId } });
   revalidatePath("/papers");
   redirect("/papers");
 }

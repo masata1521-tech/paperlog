@@ -1,11 +1,13 @@
 import { prisma } from "@/lib/prisma";
 import { ResultsView } from "@/components/papers/ResultsView";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export const dynamic = "force-dynamic";
 
 export default async function RecentPage() {
+  const userId = await requireCurrentUserId();
   const papers = await prisma.paper.findMany({
-    where: { lastViewedAt: { not: null } },
+    where: { userId, lastViewedAt: { not: null } },
     include: { tags: true, researchProjects: true },
     orderBy: { lastViewedAt: "desc" },
     take: 20,

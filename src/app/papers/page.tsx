@@ -3,6 +3,7 @@ import { Search, Plus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { Prisma } from "@/generated/prisma/client";
 import { ResultsView } from "@/components/papers/ResultsView";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 type SearchParams = Record<string, string | string[] | undefined>;
 
@@ -16,6 +17,7 @@ export default async function PapersPage({
 }: {
   searchParams: Promise<SearchParams>;
 }) {
+  const userId = await requireCurrentUserId();
   const params = await searchParams;
   const q = toStr(params.q);
   const year = toStr(params.year);
@@ -61,27 +63,27 @@ export default async function PapersPage({
 
   const [papers, yearRows, designRows, journalRows, projects] = await Promise.all([
     prisma.paper.findMany({
-      where: conditions.length > 0 ? { AND: conditions } : undefined,
+      where: { userId, AND: conditions },
       include: { tags: true, researchProjects: true },
       orderBy: [{ relevanceRating: "desc" }, { createdAt: "desc" }],
     }),
     prisma.paper.findMany({
-      where: { year: { not: null } },
+      where: { userId, year: { not: null } },
       distinct: ["year"],
       select: { year: true },
       orderBy: { year: "desc" },
     }),
     prisma.paper.findMany({
-      where: { studyDesign: { not: null } },
+      where: { userId, studyDesign: { not: null } },
       distinct: ["studyDesign"],
       select: { studyDesign: true },
     }),
     prisma.paper.findMany({
-      where: { journal: { not: null } },
+      where: { userId, journal: { not: null } },
       distinct: ["journal"],
       select: { journal: true },
     }),
-    prisma.researchProject.findMany({ orderBy: { title: "asc" } }),
+    prisma.researchProject.findMany({ where: { userId }, orderBy: { title: "asc" } }),
   ]);
 
   return (

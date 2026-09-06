@@ -1,16 +1,23 @@
-import { Sidebar } from "@/components/layout/Sidebar";
+import { AppShell } from "@/components/layout/AppShell";
+import { getCurrentUserId } from "@/lib/current-user";
+import { prisma } from "@/lib/prisma";
 import "./globals.css";
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const userId = await getCurrentUserId();
+  const user = userId
+    ? await prisma.user.findUnique({ where: { id: userId }, select: { name: true, email: true } })
+    : null;
+  const userLabel = user ? user.name ?? user.email : null;
+
   return (
     <html lang="ja">
       <body className="flex h-screen overflow-hidden bg-neutral-50">
-        <Sidebar />
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <AppShell userLabel={userLabel}>{children}</AppShell>
       </body>
     </html>
   );

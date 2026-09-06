@@ -3,14 +3,16 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { ProjectForm } from "@/components/projects/ProjectForm";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export default async function EditProjectPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const userId = await requireCurrentUserId();
   const { id } = await params;
-  const project = await prisma.researchProject.findUnique({ where: { id } });
+  const project = await prisma.researchProject.findFirst({ where: { id, userId } });
 
   if (!project) notFound();
 

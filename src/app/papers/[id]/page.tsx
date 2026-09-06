@@ -6,15 +6,17 @@ import { splitList } from "@/lib/paper-utils";
 import { StarRating } from "@/components/papers/StarRating";
 import { HighlightedResult } from "@/components/papers/HighlightedResult";
 import { PaperDetailActions } from "@/components/papers/PaperDetailActions";
+import { requireCurrentUserId } from "@/lib/current-user";
 
 export default async function PaperDetailPage({
   params,
 }: {
   params: Promise<{ id: string }>;
 }) {
+  const userId = await requireCurrentUserId();
   const { id } = await params;
-  const paper = await prisma.paper.findUnique({
-    where: { id },
+  const paper = await prisma.paper.findFirst({
+    where: { id, userId },
     include: { tags: true, researchProjects: true },
   });
 
