@@ -1,0 +1,21 @@
+export type Paper = {
+  id: string;
+  title: string;
+  authors: string;
+  journal: string | null;
+  year: number | null;
+  doi: string | null;
+  studyDesign: string | null;
+  subjects: string | null;
+  summary: string | null;
+  outcomes: string | null;
+  mainResults: string | null;
+  isFavorite: boolean;
+  isRead: boolean;
+  isAiSummary: boolean;
+  relevanceRating: number | null;
+  relevanceNote: string | null;
+  usageLabels: string[];
+  tags: { id: string; name: string }[];
+  researchProjects: { id: string; title: string }[];
+};

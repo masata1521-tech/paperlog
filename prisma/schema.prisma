@@ -1,0 +1,60 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Paper {
+  id          String   @id @default(cuid())
+  title       String
+  authors     String
+  journal     String?
+  year        Int?
+  doi         String?  @unique
+  studyDesign String?
+  subjects    String?
+  summary     String?
+  outcomes    String?
+  mainResults String?
+  isFavorite  Boolean   @default(false)
+  isRead      Boolean   @default(false)
+  isAiSummary Boolean   @default(false)
+  lastViewedAt DateTime?
+
+  // 現在の研究テーマに対する関連度メモ(簡易版: テーマ横断で1論文につき1件)
+  relevanceRating Int?
+  relevanceNote   String?
+  usageLabels     String[] @default([])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tags             Tag[]             @relation("PaperTags")
+  researchProjects ResearchProject[] @relation("PaperResearchProjects")
+}
+
+model Tag {
+  id     String  @id @default(cuid())
+  name   String  @unique
+  papers Paper[] @relation("PaperTags")
+}
+
+model ResearchProject {
+  id          String   @id @default(cuid())
+  title       String
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  papers Paper[] @relation("PaperResearchProjects")
+}
