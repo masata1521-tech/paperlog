@@ -49,6 +49,8 @@ function extractPaperFields(formData: FormData) {
     title: optionalStr(formData.get("title")),
     authors: optionalStr(formData.get("authors")),
     journal: optionalStr(formData.get("journal")),
+    volume: optionalStr(formData.get("volume")),
+    issue: optionalStr(formData.get("issue")),
     year,
     pages: optionalStr(formData.get("pages")),
     doi: optionalStr(formData.get("doi")),

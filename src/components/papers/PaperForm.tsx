@@ -31,6 +31,8 @@ export function PaperForm({
   const titleRef = useRef<HTMLInputElement>(null);
   const authorsRef = useRef<HTMLInputElement>(null);
   const journalRef = useRef<HTMLInputElement>(null);
+  const volumeRef = useRef<HTMLInputElement>(null);
+  const issueRef = useRef<HTMLInputElement>(null);
   const yearRef = useRef<HTMLInputElement>(null);
   const pagesRef = useRef<HTMLInputElement>(null);
   const doiRef = useRef<HTMLInputElement>(null);
@@ -52,6 +54,8 @@ export function PaperForm({
         if (data.title && titleRef.current) titleRef.current.value = data.title;
         if (data.authors && authorsRef.current) authorsRef.current.value = data.authors;
         if (data.journal && journalRef.current) journalRef.current.value = data.journal;
+        if (data.volume && volumeRef.current) volumeRef.current.value = data.volume;
+        if (data.issue && issueRef.current) issueRef.current.value = data.issue;
         if (data.year && yearRef.current) yearRef.current.value = String(data.year);
         if (data.pages && pagesRef.current) pagesRef.current.value = data.pages;
         setLookupMessage({ type: "success", text: "取得した情報でフォームを更新しました" });
@@ -120,15 +124,37 @@ export function PaperForm({
             placeholder="Smith J, Tanaka K, et al."
           />
         </Field>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-3">
-          <Field label="ジャーナル">
+        <div className="grid grid-cols-2 gap-4 sm:grid-cols-4">
+          <div className="col-span-2 sm:col-span-1">
+            <Field label="ジャーナル">
+              <input
+                ref={journalRef}
+                name="journal"
+                defaultValue={paper?.journal ?? ""}
+                className={inputClass}
+              />
+            </Field>
+          </div>
+          <Field label="巻">
             <input
-              ref={journalRef}
-              name="journal"
-              defaultValue={paper?.journal ?? ""}
+              ref={volumeRef}
+              name="volume"
+              defaultValue={paper?.volume ?? ""}
               className={inputClass}
+              placeholder="12"
             />
           </Field>
+          <Field label="号">
+            <input
+              ref={issueRef}
+              name="issue"
+              defaultValue={paper?.issue ?? ""}
+              className={inputClass}
+              placeholder="3"
+            />
+          </Field>
+        </div>
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="発表年">
             <input
               ref={yearRef}

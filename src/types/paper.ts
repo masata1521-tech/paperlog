@@ -3,6 +3,8 @@ export type Paper = {
   title: string;
   authors: string;
   journal: string | null;
+  volume: string | null;
+  issue: string | null;
   year: number | null;
   pages: string | null;
   doi: string | null;

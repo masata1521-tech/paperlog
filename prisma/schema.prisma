@@ -42,6 +42,8 @@ model Paper {
   title       String
   authors     String
   journal     String?
+  volume      String?
+  issue       String?
   year        Int?
   pages       String?
   doi         String?

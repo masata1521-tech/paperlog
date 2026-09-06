@@ -2,6 +2,8 @@ export type DoiMetadata = {
   title: string | null;
   authors: string | null;
   journal: string | null;
+  volume: string | null;
+  issue: string | null;
   year: number | null;
   pages: string | null;
 };
@@ -11,6 +13,8 @@ type CrossrefMessage = {
   title?: string[];
   author?: CrossrefAuthor[];
   "container-title"?: string[];
+  volume?: string;
+  issue?: string;
   page?: string;
   published?: { "date-parts"?: number[][] };
   "published-print"?: { "date-parts"?: number[][] };
@@ -58,6 +62,8 @@ export async function fetchDoiMetadata(doi: string): Promise<DoiMetadata | null>
     title: message.title?.[0] ?? null,
     authors: formatAuthors(message.author),
     journal: message["container-title"]?.[0] ?? null,
+    volume: message.volume ?? null,
+    issue: message.issue ?? null,
     year: extractYear(message),
     pages: message.page ?? null,
   };
