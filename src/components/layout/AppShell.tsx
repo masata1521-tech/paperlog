@@ -45,7 +45,7 @@ export function AppShell({
   };
 
   if (!userLabel || NO_SIDEBAR_PATHS.includes(pathname)) {
-    return <main className="flex-1 overflow-y-auto">{children}</main>;
+    return <main className="flex-1 overflow-y-auto pb-[env(safe-area-inset-bottom)]">{children}</main>;
   }
 
   return (
@@ -81,7 +81,7 @@ export function AppShell({
             PaperLog
           </Link>
         </header>
-        <main className="flex-1 overflow-y-auto">{children}</main>
+        <main className="flex-1 overflow-y-auto pb-[env(safe-area-inset-bottom)]">{children}</main>
       </div>
     </>
   );

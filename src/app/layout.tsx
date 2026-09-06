@@ -46,7 +46,7 @@ export default async function RootLayout({
 
   return (
     <html lang="ja">
-      <body className="flex h-screen overflow-hidden bg-neutral-50">
+      <body className="flex h-dvh overflow-hidden bg-neutral-50">
         <ServiceWorkerRegister />
         <AppShell userLabel={userLabel}>{children}</AppShell>
       </body>
