@@ -3,6 +3,7 @@
 import { useActionState, useRef, useState } from "react";
 import type { Paper } from "@/types/paper";
 import { createPaper, updatePaper, lookupDoi, type PaperFormState } from "@/app/papers/actions";
+import { extractDoiFromText, parseCitationText } from "@/lib/citation-parser";
 
 const STUDY_DESIGNS = [
   "Randomized controlled trial",
@@ -36,10 +37,53 @@ export function PaperForm({
   const yearRef = useRef<HTMLInputElement>(null);
   const pagesRef = useRef<HTMLInputElement>(null);
   const doiRef = useRef<HTMLInputElement>(null);
+  const citationRef = useRef<HTMLTextAreaElement>(null);
   const [isLookingUp, setIsLookingUp] = useState(false);
   const [lookupMessage, setLookupMessage] = useState<{ type: "error" | "success"; text: string } | null>(
     null
   );
+
+  const handleCitationParse = async () => {
+    const citationText = citationRef.current?.value ?? "";
+    if (!citationText.trim()) {
+      setLookupMessage({ type: "error", text: "引用文献を貼り付けてください" });
+      return;
+    }
+
+    const local = parseCitationText(citationText);
+    const doi = extractDoiFromText(citationText);
+
+    setIsLookingUp(true);
+    setLookupMessage(null);
+    try {
+      const crossref = doi ? await lookupDoi(null, doi) : null;
+      const data = crossref && "data" in crossref ? crossref.data : null;
+
+      if (doi && doiRef.current) doiRef.current.value = doi;
+      if (titleRef.current) titleRef.current.value = data?.title ?? local.title ?? titleRef.current.value;
+      if (authorsRef.current)
+        authorsRef.current.value = data?.authors ?? local.authors ?? authorsRef.current.value;
+      if (journalRef.current)
+        journalRef.current.value = data?.journal ?? local.journal ?? journalRef.current.value;
+      if (volumeRef.current)
+        volumeRef.current.value = data?.volume ?? local.volume ?? volumeRef.current.value;
+      if (issueRef.current) issueRef.current.value = data?.issue ?? local.issue ?? issueRef.current.value;
+      if (yearRef.current)
+        yearRef.current.value = String(data?.year ?? local.year ?? yearRef.current.value ?? "");
+      if (pagesRef.current) pagesRef.current.value = data?.pages ?? local.pages ?? pagesRef.current.value;
+
+      if (crossref && "error" in crossref) {
+        setLookupMessage({
+          type: "success",
+          text: "DOIが見つからなかったため、貼り付けた文献情報のみでフォームを更新しました",
+        });
+      } else {
+        setLookupMessage({ type: "success", text: "取得した情報でフォームを更新しました" });
+      }
+    } finally {
+      setIsLookingUp(false);
+    }
+  };
 
   const handleDoiLookup = async () => {
     const doi = doiRef.current?.value ?? "";
@@ -76,6 +120,27 @@ export function PaperForm({
 
       <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
         <h2 className="text-sm font-semibold text-neutral-500">書誌情報</h2>
+        <Field
+          label="引用文献を貼り付け"
+          hint="論文サイトなどに載っている引用文献をそのまま貼り付けると、DOIを見つけてCrossRefから情報を取得しつつ、取得できなかった項目は貼り付けた文献から補完します"
+        >
+          <div className="flex gap-2">
+            <textarea
+              ref={citationRef}
+              rows={2}
+              className={inputClass}
+              placeholder="Kang MH, Lee DK, ... J Sport Rehabil. 2015 Feb;24(1):62-7. doi: 10.1123/jsr.2013-0117."
+            />
+            <button
+              type="button"
+              onClick={handleCitationParse}
+              disabled={isLookingUp}
+              className="shrink-0 self-start rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+            >
+              {isLookingUp ? "取得中..." : "解析して入力"}
+            </button>
+          </div>
+        </Field>
         <Field label="DOI" hint="入力して「自動入力」を押すと、タイトル・著者などを取得します">
           <div className="flex gap-2">
             <input
