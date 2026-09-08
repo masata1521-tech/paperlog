@@ -14,8 +14,8 @@ export default async function FavoritesPage() {
 
   return (
     <div className="mx-auto max-w-6xl p-4 sm:p-8">
-      <h1 className="text-2xl font-bold text-neutral-900">お気に入り</h1>
-      <p className="mt-1 text-sm text-neutral-500">
+      <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">お気に入り</h1>
+      <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
         お気に入り登録した論文だけを表示しています。
       </p>
 

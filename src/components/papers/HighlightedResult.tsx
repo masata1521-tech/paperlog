@@ -5,12 +5,12 @@ export function HighlightedResult({ text }: { text: string | null }) {
   const parts = splitStats(text);
 
   return (
-    <p className="whitespace-pre-line text-sm leading-relaxed text-neutral-700">
+    <p className="whitespace-pre-line text-sm leading-relaxed text-neutral-700 dark:text-neutral-300">
       {parts.map((part, i) =>
         part.isStat ? (
           <code
             key={i}
-            className="mx-0.5 rounded bg-indigo-50 px-1.5 py-0.5 font-mono text-xs font-semibold text-indigo-700"
+            className="mx-0.5 rounded bg-indigo-50 dark:bg-indigo-950 px-1.5 py-0.5 font-mono text-xs font-semibold text-indigo-700 dark:text-indigo-300"
           >
             {part.text}
           </code>

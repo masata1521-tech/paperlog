@@ -31,19 +31,19 @@ export default async function ProjectDetailPage({
     <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/projects"
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
       >
         <ArrowLeft size={16} />
         プロジェクト一覧に戻る
       </Link>
 
-      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-4 sm:p-6">
+      <div className="mt-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 sm:p-6">
         <div className="flex flex-wrap items-start justify-between gap-4">
-          <h1 className="text-xl font-bold text-neutral-900">{project.title}</h1>
+          <h1 className="text-xl font-bold text-neutral-900 dark:text-neutral-100">{project.title}</h1>
           <ProjectDangerActions id={project.id} />
         </div>
         {project.description && (
-          <p className="mt-2 whitespace-pre-line text-sm text-neutral-600">
+          <p className="mt-2 whitespace-pre-line text-sm text-neutral-600 dark:text-neutral-400">
             {project.description}
           </p>
         )}
@@ -51,7 +51,7 @@ export default async function ProjectDetailPage({
 
       <div className="mt-6">
         <div className="flex items-center justify-between">
-          <h2 className="text-sm font-semibold text-neutral-500">
+          <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">
             論文({project.papers.length}件)
           </h2>
         </div>
@@ -64,7 +64,7 @@ export default async function ProjectDetailPage({
             <select
               name="paperId"
               required
-              className="flex-1 rounded-md border border-neutral-300 px-3 py-2 text-sm"
+              className="flex-1 rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-2 text-sm"
               defaultValue=""
             >
               <option value="" disabled>
@@ -78,7 +78,7 @@ export default async function ProjectDetailPage({
             </select>
             <button
               type="submit"
-              className="rounded-md bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800"
+              className="rounded-md bg-neutral-900 dark:bg-neutral-100 px-4 py-2 text-sm font-medium text-white dark:text-neutral-900 dark:text-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200"
             >
               追加
             </button>
@@ -86,7 +86,7 @@ export default async function ProjectDetailPage({
         )}
 
         {project.papers.length === 0 ? (
-          <div className="mt-4 rounded-xl border border-dashed border-neutral-300 bg-white p-8 text-center text-sm text-neutral-500">
+          <div className="mt-4 rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
             このプロジェクトにはまだ論文がありません。上のフォームから追加してください。
           </div>
         ) : (
@@ -94,16 +94,16 @@ export default async function ProjectDetailPage({
             {project.papers.map((paper) => (
               <div
                 key={paper.id}
-                className="flex items-start justify-between gap-4 rounded-xl border border-neutral-200 bg-white p-4"
+                className="flex items-start justify-between gap-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4"
               >
                 <div className="min-w-0">
                   <Link
                     href={`/papers/${paper.id}`}
-                    className="line-clamp-2 text-sm font-semibold text-neutral-900 hover:text-indigo-600 hover:underline"
+                    className="line-clamp-2 text-sm font-semibold text-neutral-900 dark:text-neutral-100 hover:text-indigo-600 dark:hover:text-indigo-400 hover:underline"
                   >
                     {paper.title}
                   </Link>
-                  <p className="mt-0.5 text-xs text-neutral-500">
+                  <p className="mt-0.5 text-xs text-neutral-500 dark:text-neutral-400">
                     {paper.authors}
                     {paper.year && <span> ・ {paper.year}</span>}
                   </p>
@@ -115,7 +115,7 @@ export default async function ProjectDetailPage({
                   <button
                     type="submit"
                     title="プロジェクトから外す"
-                    className="shrink-0 rounded-md p-1.5 text-neutral-400 hover:bg-red-50 hover:text-red-600"
+                    className="shrink-0 rounded-md p-1.5 text-neutral-400 dark:text-neutral-500 hover:bg-red-50 dark:hover:bg-red-950 hover:text-red-600 dark:hover:text-red-400"
                   >
                     <X size={16} />
                   </button>

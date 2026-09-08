@@ -33,22 +33,22 @@ export default async function PaperDetailPage({
     <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/papers"
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
       >
         <ArrowLeft size={16} />
         検索結果に戻る
       </Link>
 
-      <div className="mt-4 rounded-xl border border-neutral-200 bg-white p-4 sm:p-6">
+      <div className="mt-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-4 sm:p-6">
         <div className="flex items-start justify-between gap-4">
-          <h1 className="text-xl font-bold leading-snug text-neutral-900">{paper.title}</h1>
+          <h1 className="text-xl font-bold leading-snug text-neutral-900 dark:text-neutral-100">{paper.title}</h1>
           {!paper.isRead && (
-            <span className="mt-1 shrink-0 rounded-full bg-sky-100 px-2 py-0.5 text-[11px] font-semibold text-sky-700">
+            <span className="mt-1 shrink-0 rounded-full bg-sky-100 dark:bg-sky-900 px-2 py-0.5 text-[11px] font-semibold text-sky-700 dark:text-sky-300">
               未読
             </span>
           )}
         </div>
-        <p className="mt-2 text-sm text-neutral-500">
+        <p className="mt-2 text-sm text-neutral-500 dark:text-neutral-400">
           {paper.authors}
           {paper.journal && <span> ・ {paper.journal}</span>}
           {paper.volume && <span> ・ Vol.{paper.volume}</span>}
@@ -57,13 +57,13 @@ export default async function PaperDetailPage({
           {paper.pages && <span> ・ pp.{paper.pages}</span>}
         </p>
         {paper.doi && (
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 text-sm text-neutral-400 dark:text-neutral-500">
             DOI:{" "}
             <a
               href={`https://doi.org/${paper.doi}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-indigo-500 hover:underline"
+              className="inline-flex items-center gap-1 text-indigo-500 dark:text-indigo-400 hover:underline"
             >
               {paper.doi}
               <ExternalLink size={12} />
@@ -71,13 +71,13 @@ export default async function PaperDetailPage({
           </p>
         )}
         {paper.url && (
-          <p className="mt-1 text-sm text-neutral-400">
+          <p className="mt-1 text-sm text-neutral-400 dark:text-neutral-500">
             本文:{" "}
             <a
               href={paper.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1 text-indigo-500 hover:underline"
+              className="inline-flex items-center gap-1 text-indigo-500 dark:text-indigo-400 hover:underline"
             >
               {paper.url}
               <ExternalLink size={12} />
@@ -92,33 +92,33 @@ export default async function PaperDetailPage({
         <div className="mt-6 space-y-5">
           <section>
             <div className="mb-1 flex items-center gap-1.5">
-              <h2 className="text-sm font-semibold text-neutral-500">研究概要</h2>
+              <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">研究概要</h2>
               {paper.isAiSummary && (
-                <span className="inline-flex items-center gap-0.5 rounded-full bg-violet-50 px-1.5 py-0.5 text-[10px] font-medium text-violet-600">
+                <span className="inline-flex items-center gap-0.5 rounded-full bg-violet-50 dark:bg-violet-950 px-1.5 py-0.5 text-[10px] font-medium text-violet-600 dark:text-violet-400">
                   <Sparkles size={10} />
                   AI要約
                 </span>
               )}
             </div>
-            <p className="text-sm text-neutral-700">{paper.summary ?? "未入力"}</p>
+            <p className="text-sm text-neutral-700 dark:text-neutral-300">{paper.summary ?? "未入力"}</p>
           </section>
 
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <section>
-              <h2 className="text-sm font-semibold text-neutral-500">対象</h2>
-              <p className="mt-1 whitespace-pre-line text-sm text-neutral-700">
+              <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">対象</h2>
+              <p className="mt-1 whitespace-pre-line text-sm text-neutral-700 dark:text-neutral-300">
                 {paper.subjects ?? "未入力"}
               </p>
             </section>
             <section>
-              <h2 className="text-sm font-semibold text-neutral-500">方法</h2>
+              <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">方法</h2>
               <div className="mt-1">
                 {paper.studyDesign ? (
-                  <span className="inline-block rounded-md bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-700">
+                  <span className="inline-block rounded-md bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 text-xs font-medium text-neutral-700 dark:text-neutral-300">
                     {paper.studyDesign}
                   </span>
                 ) : (
-                  <span className="text-sm text-neutral-400">未入力</span>
+                  <span className="text-sm text-neutral-400 dark:text-neutral-500">未入力</span>
                 )}
               </div>
             </section>
@@ -126,12 +126,12 @@ export default async function PaperDetailPage({
 
           {outcomes.length > 0 && (
             <section>
-              <h2 className="text-sm font-semibold text-neutral-500">評価項目</h2>
+              <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">評価項目</h2>
               <div className="mt-1 flex flex-wrap gap-1.5">
                 {outcomes.map((item) => (
                   <code
                     key={item}
-                    className="rounded bg-emerald-50 px-2 py-0.5 font-mono text-xs text-emerald-700"
+                    className="rounded bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 font-mono text-xs text-emerald-700 dark:text-emerald-300"
                   >
                     {item}
                   </code>
@@ -140,17 +140,17 @@ export default async function PaperDetailPage({
             </section>
           )}
 
-          <section className="rounded-lg bg-neutral-50 p-4">
-            <h2 className="text-sm font-semibold text-neutral-500">主な結果</h2>
+          <section className="rounded-lg bg-neutral-50 dark:bg-neutral-900 p-4">
+            <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">主な結果</h2>
             <div className="mt-1">
               <HighlightedResult text={paper.mainResults} />
             </div>
           </section>
 
-          <section className="border-t border-neutral-100 pt-4">
+          <section className="border-t border-neutral-100 dark:border-neutral-800 pt-4">
             <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
               <div>
-                <h2 className="text-sm font-semibold text-neutral-500">研究との関連</h2>
+                <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">研究との関連</h2>
                 <div className="mt-1">
                   <StarRating rating={paper.relevanceRating} />
                 </div>
@@ -160,7 +160,7 @@ export default async function PaperDetailPage({
                   {paper.usageLabels.map((label) => (
                     <span
                       key={label}
-                      className="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700"
+                      className="rounded-full bg-amber-50 dark:bg-amber-950 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:text-amber-300"
                     >
                       {label}
                     </span>
@@ -169,14 +169,14 @@ export default async function PaperDetailPage({
               )}
             </div>
             {paper.relevanceNote && (
-              <p className="mt-2 text-sm text-neutral-600">「{paper.relevanceNote}」</p>
+              <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">「{paper.relevanceNote}」</p>
             )}
           </section>
 
           {paper.tags.length > 0 && (
             <div className="flex flex-wrap gap-1.5">
               {paper.tags.map((tag) => (
-                <span key={tag.id} className="text-xs font-medium text-indigo-500">
+                <span key={tag.id} className="text-xs font-medium text-indigo-500 dark:text-indigo-400">
                   #{tag.name}
                 </span>
               ))}
@@ -185,13 +185,13 @@ export default async function PaperDetailPage({
 
           {paper.researchProjects.length > 0 && (
             <section>
-              <h2 className="text-sm font-semibold text-neutral-500">研究プロジェクト</h2>
+              <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">研究プロジェクト</h2>
               <div className="mt-1 flex flex-wrap gap-1.5">
                 {paper.researchProjects.map((project) => (
                   <Link
                     key={project.id}
                     href={`/projects/${project.id}`}
-                    className="rounded-full bg-neutral-100 px-2.5 py-1 text-xs font-medium text-neutral-700 hover:bg-neutral-200"
+                    className="rounded-full bg-neutral-100 dark:bg-neutral-800 px-2.5 py-1 text-xs font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-700"
                   >
                     {project.title}
                   </Link>

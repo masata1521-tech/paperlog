@@ -15,13 +15,13 @@ export default async function TagsPage() {
 
   return (
     <div className="mx-auto max-w-4xl p-4 sm:p-8">
-      <h1 className="text-2xl font-bold text-neutral-900">タグ</h1>
-      <p className="mt-1 text-sm text-neutral-500">
+      <h1 className="text-2xl font-bold text-neutral-900 dark:text-neutral-100">タグ</h1>
+      <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
         タグをクリックすると、そのタグが付いた論文を検索結果で絞り込めます。
       </p>
 
       {tags.length === 0 ? (
-        <div className="mt-8 rounded-xl border border-dashed border-neutral-300 bg-white p-12 text-center text-sm text-neutral-500">
+        <div className="mt-8 rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-12 text-center text-sm text-neutral-500 dark:text-neutral-400">
           まだタグがありません。論文を登録・編集するときにタグを追加できます。
         </div>
       ) : (
@@ -30,11 +30,11 @@ export default async function TagsPage() {
             <Link
               key={tag.id}
               href={`/papers?tag=${encodeURIComponent(tag.name)}`}
-              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 bg-white px-3 py-1.5 text-sm text-neutral-700 hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
+              className="inline-flex items-center gap-1.5 rounded-full border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 py-1.5 text-sm text-neutral-700 dark:text-neutral-300 hover:border-indigo-300 dark:border-indigo-700 hover:bg-indigo-50 dark:hover:bg-indigo-950 hover:text-indigo-700 dark:hover:text-indigo-300"
             >
               <TagIcon size={14} />
               {tag.name}
-              <span className="text-xs text-neutral-400">{tag._count.papers}</span>
+              <span className="text-xs text-neutral-400 dark:text-neutral-500">{tag._count.papers}</span>
             </Link>
           ))}
         </div>

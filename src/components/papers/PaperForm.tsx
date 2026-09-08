@@ -113,13 +113,13 @@ export function PaperForm({
     <form action={formAction} className="space-y-6">
       {paper && <input type="hidden" name="id" value={paper.id} />}
       {state?.error && (
-        <div className="rounded-md border border-red-200 bg-red-50 px-4 py-2.5 text-sm text-red-700">
+        <div className="rounded-md border border-red-200 dark:border-red-900 bg-red-50 dark:bg-red-950 px-4 py-2.5 text-sm text-red-700 dark:text-red-300">
           {state.error}
         </div>
       )}
 
-      <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
-        <h2 className="text-sm font-semibold text-neutral-500">書誌情報</h2>
+      <section className="space-y-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5">
+        <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">書誌情報</h2>
         <Field
           label="引用文献を貼り付け"
           hint="論文サイトなどに載っている引用文献をそのまま貼り付けると、DOIを見つけてCrossRefから情報を取得しつつ、取得できなかった項目は貼り付けた文献から補完します"
@@ -135,7 +135,7 @@ export function PaperForm({
               type="button"
               onClick={handleCitationParse}
               disabled={isLookingUp}
-              className="shrink-0 self-start rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+              className="shrink-0 self-start rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             >
               {isLookingUp ? "取得中..." : "解析して入力"}
             </button>
@@ -154,7 +154,7 @@ export function PaperForm({
               type="button"
               onClick={handleDoiLookup}
               disabled={isLookingUp}
-              className="shrink-0 rounded-md border border-neutral-300 px-3 py-2 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+              className="shrink-0 rounded-md border border-neutral-300 dark:border-neutral-700 px-3 py-2 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
             >
               {isLookingUp ? "取得中..." : "自動入力"}
             </button>
@@ -162,7 +162,7 @@ export function PaperForm({
           {lookupMessage && (
             <span
               className={`mt-1 block text-xs ${
-                lookupMessage.type === "error" ? "text-red-600" : "text-emerald-600"
+                lookupMessage.type === "error" ? "text-red-600 dark:text-red-400" : "text-emerald-600 dark:text-emerald-400"
               }`}
             >
               {lookupMessage.text}
@@ -251,8 +251,8 @@ export function PaperForm({
         </Field>
       </section>
 
-      <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
-        <h2 className="text-sm font-semibold text-neutral-500">研究内容</h2>
+      <section className="space-y-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5">
+        <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">研究内容</h2>
         <Field label="研究概要" hint="この研究が何を調べたかを2〜3行で">
           <textarea
             name="summary"
@@ -297,8 +297,8 @@ export function PaperForm({
         </Field>
       </section>
 
-      <section className="space-y-4 rounded-xl border border-neutral-200 bg-white p-5">
-        <h2 className="text-sm font-semibold text-neutral-500">自分の研究との関連</h2>
+      <section className="space-y-4 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5">
+        <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">自分の研究との関連</h2>
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <Field label="関連度">
             <select
@@ -346,7 +346,7 @@ export function PaperForm({
             ))}
           </datalist>
         </Field>
-        <label className="flex items-center gap-2 text-sm text-neutral-700">
+        <label className="flex items-center gap-2 text-sm text-neutral-700 dark:text-neutral-300">
           <input
             type="checkbox"
             name="isAiSummary"
@@ -358,11 +358,11 @@ export function PaperForm({
       </section>
 
       {projects.length > 0 && (
-        <section className="space-y-2 rounded-xl border border-neutral-200 bg-white p-5">
-          <h2 className="text-sm font-semibold text-neutral-500">研究プロジェクト</h2>
+        <section className="space-y-2 rounded-xl border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-5">
+          <h2 className="text-sm font-semibold text-neutral-500 dark:text-neutral-400">研究プロジェクト</h2>
           <div className="flex flex-wrap gap-x-4 gap-y-2">
             {projects.map((project) => (
-              <label key={project.id} className="flex items-center gap-1.5 text-sm text-neutral-700">
+              <label key={project.id} className="flex items-center gap-1.5 text-sm text-neutral-700 dark:text-neutral-300">
                 <input
                   type="checkbox"
                   name="projectIds"
@@ -384,7 +384,7 @@ export function PaperForm({
             name="continueAdding"
             value="1"
             disabled={isPending}
-            className="rounded-md border border-neutral-300 px-5 py-2.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-md border border-neutral-300 dark:border-neutral-700 px-5 py-2.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
           >
             {isPending ? "保存中..." : "登録して続けて追加"}
           </button>
@@ -392,7 +392,7 @@ export function PaperForm({
         <button
           type="submit"
           disabled={isPending}
-          className="rounded-md bg-neutral-900 px-5 py-2.5 text-sm font-medium text-white hover:bg-neutral-800 disabled:opacity-50"
+          className="rounded-md bg-neutral-900 dark:bg-neutral-100 px-5 py-2.5 text-sm font-medium text-white dark:text-neutral-900 dark:text-neutral-100 hover:bg-neutral-800 dark:hover:bg-neutral-200 disabled:opacity-50"
         >
           {isPending ? "保存中..." : paper ? "変更を保存" : "論文を登録"}
         </button>
@@ -402,7 +402,7 @@ export function PaperForm({
 }
 
 const inputClass =
-  "w-full rounded-md border border-neutral-300 px-3 py-2 text-sm focus:border-indigo-400 focus:outline-none focus:ring-2 focus:ring-indigo-100";
+  "w-full rounded-md border border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 text-neutral-900 dark:text-neutral-100 px-3 py-2 text-sm focus:border-indigo-400 dark:focus:border-indigo-500 focus:outline-none focus:ring-2 focus:ring-indigo-100 dark:focus:ring-indigo-900";
 
 function Field({
   label,
@@ -417,12 +417,12 @@ function Field({
 }) {
   return (
     <label className="block">
-      <span className="mb-1 block text-sm font-medium text-neutral-700">
+      <span className="mb-1 block text-sm font-medium text-neutral-700 dark:text-neutral-300">
         {label}
-        {required && <span className="ml-0.5 text-red-500">*</span>}
+        {required && <span className="ml-0.5 text-red-500 dark:text-red-400">*</span>}
       </span>
       {children}
-      {hint && <span className="mt-1 block text-xs text-neutral-400">{hint}</span>}
+      {hint && <span className="mt-1 block text-xs text-neutral-400 dark:text-neutral-500">{hint}</span>}
     </label>
   );
 }

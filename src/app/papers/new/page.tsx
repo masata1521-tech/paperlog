@@ -22,17 +22,17 @@ export default async function NewPaperPage({
     <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href="/papers"
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
       >
         <ArrowLeft size={16} />
         検索結果に戻る
       </Link>
-      <h1 className="mt-3 text-2xl font-bold text-neutral-900">論文を登録</h1>
-      <p className="mt-1 text-sm text-neutral-500">
+      <h1 className="mt-3 text-2xl font-bold text-neutral-900 dark:text-neutral-100">論文を登録</h1>
+      <p className="mt-1 text-sm text-neutral-500 dark:text-neutral-400">
         タイトルと著者以外は空欄でも登録できます。あとから追記・修正してください。
       </p>
       {created && (
-        <div className="mt-4 rounded-md border border-emerald-200 bg-emerald-50 px-4 py-2.5 text-sm text-emerald-700">
+        <div className="mt-4 rounded-md border border-emerald-200 dark:border-emerald-800 bg-emerald-50 dark:bg-emerald-950 px-4 py-2.5 text-sm text-emerald-700 dark:text-emerald-300">
           論文を登録しました。続けて次の論文を登録できます。
         </div>
       )}

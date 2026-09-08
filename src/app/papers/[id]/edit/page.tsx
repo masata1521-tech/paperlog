@@ -27,12 +27,12 @@ export default async function EditPaperPage({
     <div className="mx-auto max-w-3xl p-4 sm:p-8">
       <Link
         href={`/papers/${id}`}
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
       >
         <ArrowLeft size={16} />
         詳細に戻る
       </Link>
-      <h1 className="mt-3 text-2xl font-bold text-neutral-900">論文を編集</h1>
+      <h1 className="mt-3 text-2xl font-bold text-neutral-900 dark:text-neutral-100">論文を編集</h1>
 
       <div className="mt-6">
         <PaperForm paper={paper} existingTags={tags.map((t) => t.name)} projects={projects} />

@@ -3,6 +3,7 @@ import { AppShell } from "@/components/layout/AppShell";
 import { ServiceWorkerRegister } from "@/components/layout/ServiceWorkerRegister";
 import { getCurrentUserId } from "@/lib/current-user";
 import { prisma } from "@/lib/prisma";
+import { THEME_INIT_SCRIPT } from "@/lib/theme-script";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -45,8 +46,11 @@ export default async function RootLayout({
   const userLabel = user ? user.name ?? user.email : null;
 
   return (
-    <html lang="ja">
-      <body className="flex h-dvh overflow-hidden bg-neutral-50">
+    <html lang="ja" suppressHydrationWarning>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: THEME_INIT_SCRIPT }} />
+      </head>
+      <body className="flex h-dvh overflow-hidden bg-neutral-50 dark:bg-neutral-950">
         <ServiceWorkerRegister />
         <AppShell userLabel={userLabel}>{children}</AppShell>
       </body>

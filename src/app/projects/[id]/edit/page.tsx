@@ -20,12 +20,12 @@ export default async function EditProjectPage({
     <div className="mx-auto max-w-2xl p-8">
       <Link
         href={`/projects/${id}`}
-        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 hover:text-neutral-700"
+        className="inline-flex items-center gap-1.5 text-sm text-neutral-500 dark:text-neutral-400 hover:text-neutral-700 dark:hover:text-neutral-300"
       >
         <ArrowLeft size={16} />
         プロジェクトに戻る
       </Link>
-      <h1 className="mt-3 text-2xl font-bold text-neutral-900">プロジェクトを編集</h1>
+      <h1 className="mt-3 text-2xl font-bold text-neutral-900 dark:text-neutral-100">プロジェクトを編集</h1>
 
       <div className="mt-6">
         <ProjectForm project={project} />

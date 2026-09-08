@@ -37,7 +37,7 @@ export function DefaultViewSetting() {
     <div>
       <div className="flex gap-3">
         {OPTIONS.map((opt) => (
-          <label key={opt.value} className="flex items-center gap-1.5 text-sm text-neutral-700">
+          <label key={opt.value} className="flex items-center gap-1.5 text-sm text-neutral-700 dark:text-neutral-300">
             <input
               type="radio"
               name="defaultView"
@@ -50,7 +50,7 @@ export function DefaultViewSetting() {
           </label>
         ))}
       </div>
-      {saved && <p className="mt-1.5 text-xs text-emerald-600">保存しました</p>}
+      {saved && <p className="mt-1.5 text-xs text-emerald-600 dark:text-emerald-400">保存しました</p>}
     </div>
   );
 }

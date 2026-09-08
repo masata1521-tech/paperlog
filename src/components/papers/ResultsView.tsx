@@ -46,13 +46,13 @@ export function ResultsView({ papers }: { papers: Paper[] }) {
   return (
     <div>
       <div className="mb-4 flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-neutral-500">
+        <p className="text-sm text-neutral-500 dark:text-neutral-400">
           {papers.length}件の論文
           {selectedIds.size > 0 && (
-            <span className="ml-2 text-indigo-600">・{selectedIds.size}件選択中</span>
+            <span className="ml-2 text-indigo-600 dark:text-indigo-400">・{selectedIds.size}件選択中</span>
           )}
         </p>
-        <div className="grid grid-cols-3 rounded-lg border border-neutral-200 bg-white p-1 sm:flex sm:items-center">
+        <div className="grid grid-cols-3 rounded-lg border border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 p-1 sm:flex sm:items-center">
           {VIEW_OPTIONS.map(({ mode, label, icon: Icon }) => (
             <button
               key={mode}
@@ -60,8 +60,8 @@ export function ResultsView({ papers }: { papers: Paper[] }) {
               onClick={() => setView(mode)}
               className={`inline-flex items-center justify-center gap-1.5 rounded-md px-2 py-1.5 text-sm font-medium transition-colors sm:px-3 ${
                 view === mode
-                  ? "bg-neutral-900 text-white"
-                  : "text-neutral-600 hover:bg-neutral-100"
+                  ? "bg-neutral-900 dark:bg-neutral-100 text-white dark:text-neutral-900 dark:text-neutral-100"
+                  : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
               }`}
             >
               <Icon size={15} />
@@ -72,7 +72,7 @@ export function ResultsView({ papers }: { papers: Paper[] }) {
       </div>
 
       {papers.length === 0 ? (
-        <div className="rounded-xl border border-dashed border-neutral-300 bg-white p-12 text-center text-sm text-neutral-500">
+        <div className="rounded-xl border border-dashed border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900 p-12 text-center text-sm text-neutral-500 dark:text-neutral-400">
           条件に一致する論文が見つかりませんでした。検索条件を変えてお試しください。
         </div>
       ) : view === "card" ? (

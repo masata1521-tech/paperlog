@@ -68,16 +68,16 @@ export function AppShell({
       )}
 
       <div className="flex min-w-0 flex-1 flex-col">
-        <header className="flex items-center gap-2 border-b border-neutral-200 bg-white px-3 pb-3 pt-[calc(env(safe-area-inset-top)+2.5rem)] md:hidden">
+        <header className="flex items-center gap-2 border-b border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 pb-3 pt-[calc(env(safe-area-inset-top)+2.5rem)] md:hidden">
           <button
             type="button"
             onClick={() => setMobileOpen(true)}
-            className="rounded-md p-1.5 text-neutral-600 hover:bg-neutral-100"
+            className="rounded-md p-1.5 text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800"
             aria-label="メニューを開く"
           >
             <Menu size={20} />
           </button>
-          <Link href="/dashboard" className="text-base font-semibold text-neutral-900">
+          <Link href="/dashboard" className="text-base font-semibold text-neutral-900 dark:text-neutral-100">
             PaperLog
           </Link>
         </header>

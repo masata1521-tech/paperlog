@@ -23,8 +23,8 @@ export function PaperCard({
 
   return (
     <div
-      className={`relative rounded-xl border bg-white p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5 ${
-        selected ? "border-indigo-400 ring-1 ring-indigo-300" : "border-neutral-200"
+      className={`relative rounded-xl border bg-white dark:bg-neutral-900 p-4 shadow-sm transition-shadow hover:shadow-md sm:p-5 ${
+        selected ? "border-indigo-400 dark:border-indigo-500 ring-1 ring-indigo-300 dark:ring-indigo-700" : "border-neutral-200 dark:border-neutral-800"
       }`}
     >
       <div className="flex items-start gap-3">
@@ -32,28 +32,28 @@ export function PaperCard({
           type="checkbox"
           checked={selected}
           onChange={() => onToggleSelect(paper.id)}
-          className="mt-1.5 size-4 shrink-0 rounded border-neutral-300 accent-indigo-600"
+          className="mt-1.5 size-4 shrink-0 rounded border-neutral-300 dark:border-neutral-700 accent-indigo-600"
           aria-label="比較用に選択"
         />
         <div className="min-w-0 flex-1">
           <div className="flex items-start justify-between gap-2">
-            <h3 className="line-clamp-2 text-base font-bold leading-snug text-neutral-900">
+            <h3 className="line-clamp-2 text-base font-bold leading-snug text-neutral-900 dark:text-neutral-100">
               {paper.title}
             </h3>
             {!paper.isRead && (
-              <span className="mt-0.5 shrink-0 rounded-full bg-sky-100 px-2 py-0.5 text-[10px] font-semibold text-sky-700">
+              <span className="mt-0.5 shrink-0 rounded-full bg-sky-100 dark:bg-sky-900 px-2 py-0.5 text-[10px] font-semibold text-sky-700 dark:text-sky-300">
                 未読
               </span>
             )}
           </div>
-          <p className="mt-1 text-xs text-neutral-500">
+          <p className="mt-1 text-xs text-neutral-500 dark:text-neutral-400">
             {paper.authors}
             {paper.journal && <span> ・ {paper.journal}</span>}
             {paper.volume && <span> ・ Vol.{paper.volume}</span>}
             {paper.issue && <span> ・ No.{paper.issue}</span>}
             {paper.year && <span> ・ {paper.year}</span>}
             {paper.pages && <span> ・ pp.{paper.pages}</span>}
-            {paper.doi && <span className="text-neutral-400"> ・ DOI: {paper.doi}</span>}
+            {paper.doi && <span className="text-neutral-400 dark:text-neutral-500"> ・ DOI: {paper.doi}</span>}
           </p>
         </div>
       </div>
@@ -61,33 +61,33 @@ export function PaperCard({
       <div className="mt-4 space-y-3 pl-0 sm:pl-7">
         <section>
           <div className="mb-1 flex items-center gap-1.5">
-            <span className="text-xs font-semibold text-neutral-500">【研究概要】</span>
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【研究概要】</span>
             {paper.isAiSummary && (
-              <span className="inline-flex items-center gap-0.5 rounded-full bg-violet-50 px-1.5 py-0.5 text-[10px] font-medium text-violet-600">
+              <span className="inline-flex items-center gap-0.5 rounded-full bg-violet-50 dark:bg-violet-950 px-1.5 py-0.5 text-[10px] font-medium text-violet-600 dark:text-violet-400">
                 <Sparkles size={10} />
                 AI要約
               </span>
             )}
           </div>
-          <p className="line-clamp-3 text-sm text-neutral-700">{paper.summary ?? "—"}</p>
+          <p className="line-clamp-3 text-sm text-neutral-700 dark:text-neutral-300">{paper.summary ?? "—"}</p>
         </section>
 
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           <section>
-            <span className="text-xs font-semibold text-neutral-500">【対象】</span>
-            <p className="mt-0.5 whitespace-pre-line text-sm text-neutral-700">
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【対象】</span>
+            <p className="mt-0.5 whitespace-pre-line text-sm text-neutral-700 dark:text-neutral-300">
               {paper.subjects ?? "—"}
             </p>
           </section>
           <section>
-            <span className="text-xs font-semibold text-neutral-500">【方法】</span>
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【方法】</span>
             <div className="mt-1">
               {paper.studyDesign ? (
-                <span className="inline-block rounded-md bg-neutral-100 px-2 py-0.5 text-xs font-medium text-neutral-700">
+                <span className="inline-block rounded-md bg-neutral-100 dark:bg-neutral-800 px-2 py-0.5 text-xs font-medium text-neutral-700 dark:text-neutral-300">
                   {paper.studyDesign}
                 </span>
               ) : (
-                <span className="text-sm text-neutral-400">—</span>
+                <span className="text-sm text-neutral-400 dark:text-neutral-500">—</span>
               )}
             </div>
           </section>
@@ -95,12 +95,12 @@ export function PaperCard({
 
         {outcomes.length > 0 && (
           <section>
-            <span className="text-xs font-semibold text-neutral-500">【評価項目】</span>
+            <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【評価項目】</span>
             <div className="mt-1 flex flex-wrap gap-1.5">
               {outcomes.map((item) => (
                 <code
                   key={item}
-                  className="rounded bg-emerald-50 px-2 py-0.5 font-mono text-xs text-emerald-700"
+                  className="rounded bg-emerald-50 dark:bg-emerald-950 px-2 py-0.5 font-mono text-xs text-emerald-700 dark:text-emerald-300"
                 >
                   {item}
                 </code>
@@ -109,17 +109,17 @@ export function PaperCard({
           </section>
         )}
 
-        <section className="rounded-lg bg-neutral-50 p-3">
-          <span className="text-xs font-semibold text-neutral-500">【主な結果】</span>
+        <section className="rounded-lg bg-neutral-50 dark:bg-neutral-900 p-3">
+          <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【主な結果】</span>
           <div className="mt-1">
             <HighlightedResult text={paper.mainResults} />
           </div>
         </section>
 
-        <section className="border-t border-neutral-100 pt-3">
+        <section className="border-t border-neutral-100 dark:border-neutral-800 pt-3">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <div>
-              <span className="text-xs font-semibold text-neutral-500">【研究との関連】</span>
+              <span className="text-xs font-semibold text-neutral-500 dark:text-neutral-400">【研究との関連】</span>
               <div className="mt-0.5">
                 <StarRating rating={paper.relevanceRating} />
               </div>
@@ -129,7 +129,7 @@ export function PaperCard({
                 {paper.usageLabels.map((label) => (
                   <span
                     key={label}
-                    className="rounded-full bg-amber-50 px-2 py-0.5 text-[11px] font-medium text-amber-700"
+                    className="rounded-full bg-amber-50 dark:bg-amber-950 px-2 py-0.5 text-[11px] font-medium text-amber-700 dark:text-amber-300"
                   >
                     {label}
                   </span>
@@ -138,14 +138,14 @@ export function PaperCard({
             )}
           </div>
           {paper.relevanceNote && (
-            <p className="mt-1.5 text-sm text-neutral-600">「{paper.relevanceNote}」</p>
+            <p className="mt-1.5 text-sm text-neutral-600 dark:text-neutral-400">「{paper.relevanceNote}」</p>
           )}
         </section>
 
         {paper.tags.length > 0 && (
           <div className="flex flex-wrap gap-1.5">
             {paper.tags.map((tag) => (
-              <span key={tag.id} className="text-xs font-medium text-indigo-500">
+              <span key={tag.id} className="text-xs font-medium text-indigo-500 dark:text-indigo-400">
                 #{tag.name}
               </span>
             ))}
@@ -155,7 +155,7 @@ export function PaperCard({
         <div className="flex items-center gap-2 pt-1">
           <Link
             href={`/papers/${paper.id}`}
-            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+            className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
           >
             詳細を見る
             <ExternalLink size={14} />
@@ -165,7 +165,7 @@ export function PaperCard({
               href={paper.url}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+              className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
             >
               本文を開く
               <ExternalLink size={14} />
@@ -177,11 +177,11 @@ export function PaperCard({
             onClick={() => startTransition(() => toggleFavorite(paper.id))}
             className={`inline-flex items-center gap-1.5 rounded-md border px-3 py-1.5 text-sm font-medium transition-colors disabled:opacity-50 ${
               paper.isFavorite
-                ? "border-amber-300 bg-amber-50 text-amber-700"
-                : "border-neutral-200 text-neutral-700 hover:bg-neutral-50"
+                ? "border-amber-300 dark:border-amber-700 bg-amber-50 dark:bg-amber-950 text-amber-700 dark:text-amber-300"
+                : "border-neutral-200 dark:border-neutral-800 text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
             }`}
           >
-            <Star size={14} className={paper.isFavorite ? "fill-amber-500 text-amber-500" : ""} />
+            <Star size={14} className={paper.isFavorite ? "fill-amber-500 text-amber-500 dark:text-amber-400" : ""} />
             お気に入り
           </button>
         </div>

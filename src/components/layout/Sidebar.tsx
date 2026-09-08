@@ -16,6 +16,7 @@ import {
   PanelLeftOpen,
 } from "lucide-react";
 import { logout } from "@/lib/auth-actions";
+import { ThemeToggle } from "./ThemeToggle";
 
 const NAV_ITEMS = [
   { href: "/dashboard", label: "ホーム", icon: Home },
@@ -43,7 +44,7 @@ export function Sidebar({
 
   return (
     <nav
-      className={`flex h-full flex-col gap-1 border-r border-neutral-200 bg-white px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-[calc(env(safe-area-inset-top)+2.5rem)] transition-[width] duration-150 md:pb-3 md:pt-3 ${
+      className={`flex h-full flex-col gap-1 border-r border-neutral-200 dark:border-neutral-800 bg-white dark:bg-neutral-900 px-3 pb-[calc(env(safe-area-inset-bottom)+0.75rem)] pt-[calc(env(safe-area-inset-top)+2.5rem)] transition-[width] duration-150 md:pb-3 md:pt-3 ${
         collapsed ? "w-16" : "w-60"
       }`}
     >
@@ -52,7 +53,7 @@ export function Sidebar({
           <Link
             href="/dashboard"
             onClick={onNavigate}
-            className="text-lg font-semibold text-neutral-900 hover:text-neutral-700"
+            className="text-lg font-semibold text-neutral-900 dark:text-neutral-100 hover:text-neutral-700 dark:hover:text-neutral-300"
           >
             PaperLog
           </Link>
@@ -61,7 +62,7 @@ export function Sidebar({
           <button
             type="button"
             onClick={onToggleCollapse}
-            className="rounded-md p-1.5 text-neutral-400 hover:bg-neutral-100 hover:text-neutral-700"
+            className="rounded-md p-1.5 text-neutral-400 dark:text-neutral-500 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-700 dark:hover:text-neutral-300"
             aria-label={collapsed ? "サイドバーを開く" : "サイドバーを閉じる"}
           >
             {collapsed ? <PanelLeftOpen size={18} /> : <PanelLeftClose size={18} />}
@@ -80,8 +81,8 @@ export function Sidebar({
               "flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors",
               collapsed ? "justify-center" : "",
               isActive
-                ? "bg-indigo-50 text-indigo-700"
-                : "text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900",
+                ? "bg-indigo-50 dark:bg-indigo-950 text-indigo-700 dark:text-indigo-300"
+                : "text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100",
             ].join(" ")}
           >
             <Icon size={18} strokeWidth={isActive ? 2.5 : 2} className="shrink-0" />
@@ -90,9 +91,10 @@ export function Sidebar({
         );
       })}
 
-      <div className="mt-auto border-t border-neutral-100 pt-3">
+      <div className="mt-auto border-t border-neutral-100 dark:border-neutral-800 pt-3">
+        <ThemeToggle collapsed={collapsed} />
         {!collapsed && (
-          <p className="truncate px-2 text-xs text-neutral-400" title={userLabel}>
+          <p className="mt-2 truncate px-2 text-xs text-neutral-400 dark:text-neutral-500" title={userLabel}>
             {userLabel}
           </p>
         )}
@@ -101,7 +103,7 @@ export function Sidebar({
           disabled={isPending}
           title={collapsed ? "ログアウト" : undefined}
           onClick={() => startTransition(() => logout())}
-          className={`mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-600 hover:bg-neutral-100 hover:text-neutral-900 disabled:opacity-50 ${
+          className={`mt-1 flex w-full items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium text-neutral-600 dark:text-neutral-400 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 disabled:opacity-50 ${
             collapsed ? "justify-center" : ""
           }`}
         >

@@ -23,15 +23,15 @@ export function ConfirmDialog({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4">
-      <div className="w-full max-w-sm rounded-xl bg-white p-5 shadow-lg">
-        <h2 className="text-base font-bold text-neutral-900">{title}</h2>
-        <p className="mt-2 text-sm text-neutral-600">{message}</p>
+      <div className="w-full max-w-sm rounded-xl bg-white dark:bg-neutral-900 p-5 shadow-lg">
+        <h2 className="text-base font-bold text-neutral-900 dark:text-neutral-100">{title}</h2>
+        <p className="mt-2 text-sm text-neutral-600 dark:text-neutral-400">{message}</p>
         <div className="mt-5 flex justify-end gap-2">
           <button
             type="button"
             onClick={onCancel}
             disabled={isPending}
-            className="rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50 disabled:opacity-50"
+            className="rounded-md border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800 disabled:opacity-50"
           >
             {cancelLabel}
           </button>

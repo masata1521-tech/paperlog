@@ -14,7 +14,7 @@ export function ProjectDangerActions({ id }: { id: string }) {
     <div className="flex shrink-0 items-center gap-2">
       <Link
         href={`/projects/${id}/edit`}
-        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-neutral-700 hover:bg-neutral-50"
+        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 text-sm font-medium text-neutral-700 dark:text-neutral-300 hover:bg-neutral-50 dark:hover:bg-neutral-800"
       >
         <Pencil size={14} />
         編集
@@ -23,7 +23,7 @@ export function ProjectDangerActions({ id }: { id: string }) {
         type="button"
         disabled={isPending}
         onClick={() => setConfirmingDelete(true)}
-        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 px-3 py-1.5 text-sm font-medium text-red-600 hover:bg-red-50 disabled:opacity-50"
+        className="inline-flex items-center gap-1.5 rounded-md border border-neutral-200 dark:border-neutral-800 px-3 py-1.5 text-sm font-medium text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-950 disabled:opacity-50"
       >
         <Trash2 size={14} />
         削除
