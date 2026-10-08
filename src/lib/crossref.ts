@@ -21,10 +21,35 @@ type CrossrefMessage = {
   "published-online"?: { "date-parts"?: number[][] };
 };
 
+const NAMED_ENTITIES: Record<string, string> = {
+  amp: "&",
+  lt: "<",
+  gt: ">",
+  quot: '"',
+  apos: "'",
+  nbsp: " ",
+};
+
+// CrossRef sometimes returns HTML-escaped text and inline markup (<i>, <sub>, ...).
+function cleanText(value: string | null | undefined): string | null {
+  if (value == null) return null;
+  const cleaned = value
+    .replace(/<\/?[a-z][^>]*>/gi, "")
+    .replace(/&(?:#(\d+)|#x([0-9a-f]+)|([a-z]+));/gi, (match, dec, hex, name) => {
+      if (name) return NAMED_ENTITIES[name.toLowerCase()] ?? match;
+      const code = dec ? parseInt(dec, 10) : parseInt(hex, 16);
+      return code > 0 && code <= 0x10ffff ? String.fromCodePoint(code) : match;
+    })
+    .trim();
+  return cleaned || null;
+}
+
 function formatAuthors(authors: CrossrefAuthor[] | undefined): string | null {
   if (!authors || authors.length === 0) return null;
   return authors
-    .map(({ family, given }) => {
+    .map((author) => {
+      const family = cleanText(author.family) ?? undefined;
+      const given = cleanText(author.given) ?? undefined;
       const initials = given
         ? given
             .split(/\s+/)
@@ -59,9 +84,9 @@ export async function fetchDoiMetadata(doi: string): Promise<DoiMetadata | null>
   if (!message) return null;
 
   return {
-    title: message.title?.[0] ?? null,
+    title: cleanText(message.title?.[0]),
     authors: formatAuthors(message.author),
-    journal: message["container-title"]?.at(-1) ?? null,
+    journal: cleanText(message["container-title"]?.at(-1)),
     volume: message.volume ?? null,
     issue: message.issue ?? null,
     year: extractYear(message),
